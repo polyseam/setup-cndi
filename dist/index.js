@@ -15,8 +15,10 @@ async function setup() {
     const version = core.getInput('version');
     // Download the specific version of the tool, e.g. as a tarball/zipball
     const pathToBin = await tc.downloadTool(`https://cndi-binaries.s3.amazonaws.com/cndi/${version}/cndi-linux`);
+    core.debug(`Downloaded tool to ${pathToBin}`);
     // Expose the tool by adding it to the PATH
     core.addPath(pathToBin)
+    core.debug(`Added ${pathToBin} to PATH`);
   } catch (e) {
     core.setFailed(e);
   }
