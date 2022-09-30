@@ -1,10 +1,10 @@
-name: setup-gh
-description: Setup GitHub CLI, gh, on GitHub Actions runners
+name: setup-cndi
+description: Setup cndi CLI on GitHub Actions runners
 inputs:
   version:
-    description: Version of GitHub CLI to install
+    description: Version of CNDI CLI to install
     required: false
-    default: 1.2.0
+    default: 1.0.0
 runs:
-  using: node12
+  using: node16
   main: dist/index.js

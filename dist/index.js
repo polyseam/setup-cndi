@@ -8,23 +8,15 @@ require('./sourcemap-register.js');module.exports =
 const path = __webpack_require__(622);
 const core = __webpack_require__(186);
 const tc = __webpack_require__(784);
-const { getDownloadObject } = __webpack_require__(918);
 
 async function setup() {
   try {
     // Get version of tool to be installed
     const version = core.getInput('version');
-
     // Download the specific version of the tool, e.g. as a tarball/zipball
-    const download = getDownloadObject(version);
-    const pathToTarball = await tc.downloadTool(download.url);
-
-    // Extract the tarball/zipball onto host runner
-    const extract = download.url.endsWith('.zip') ? tc.extractZip : tc.extractTar;
-    const pathToCLI = await extract(pathToTarball);
-
+    const pathToBin = await tc.downloadTool(`https://cndi-binaries.s3.amazonaws.com/cndi/${version}/cndi-linux`);
     // Expose the tool by adding it to the PATH
-    core.addPath(path.join(pathToCLI, download.binPath));
+    core.addPath(pathToBin)
   } catch (e) {
     core.setFailed(e);
   }
@@ -35,49 +27,6 @@ module.exports = setup
 if (require.main === require.cache[eval('__filename')]) {
   setup();
 }
-
-
-/***/ }),
-
-/***/ 918:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-const os = __webpack_require__(87);
-const path = __webpack_require__(622);
-
-// arch in [arm, x32, x64...] (https://nodejs.org/api/os.html#os_os_arch)
-// return value in [amd64, 386, arm]
-function mapArch(arch) {
-  const mappings = {
-    x32: '386',
-    x64: 'amd64'
-  };
-  return mappings[arch] || arch;
-}
-
-// os in [darwin, linux, win32...] (https://nodejs.org/api/os.html#os_os_platform)
-// return value in [darwin, linux, windows]
-function mapOS(os) {
-  const mappings = {
-    darwin: 'macOS',
-    win32: 'windows'
-  };
-  return mappings[os] || os;
-}
-
-function getDownloadObject(version) {
-  const platform = os.platform();
-  const filename = `gh_${ version }_${ mapOS(platform) }_${ mapArch(os.arch()) }`;
-  const extension = platform === 'win32' ? 'zip' : 'tar.gz';
-  const binPath = platform === 'win32' ? 'bin' : path.join(filename, 'bin');
-  const url = `https://github.com/cli/cli/releases/download/v${ version }/${ filename }.${ extension }`;
-  return {
-    url,
-    binPath
-  };
-}
-
-module.exports = { getDownloadObject }
 
 
 /***/ }),
