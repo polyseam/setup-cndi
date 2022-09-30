@@ -4,7 +4,7 @@ inputs:
   version:
     description: Version of CNDI CLI to install
     required: false
-    default: 1.0.1
+    default: 1.0.2
 runs:
   using: node16
   main: dist/index.js
