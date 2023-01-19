@@ -11,14 +11,10 @@ const tc = __webpack_require__(784);
 async function setup() {
   try {
     // Get version of tool to be installed
-    let version = core.getInput('version');
-    let downloadUrl = `https://cndi-binaries.s3.amazonaws.com/cndi/${version}/cndi-linux`;
+    let version = core.getInput('version') || 'latest';
+    let downloadUrl = `https://github.com/polyseam/cndi/releases/${version}/download/cndi-linux`;
 
-    if(!version) {
-      version = 'latest';
-    }
-
-    if(version ==='main'){
+    if(version === 'main'){
       downloadUrl = `https://cndi-binaries.s3.amazonaws.com/cndi/main/cndi-linux`;
     }
 
