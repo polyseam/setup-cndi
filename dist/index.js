@@ -5,7 +5,6 @@ require('./sourcemap-register.js');module.exports =
 /***/ 932:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-const path = __webpack_require__(622);
 const core = __webpack_require__(186);
 const tc = __webpack_require__(784);
 
@@ -14,7 +13,7 @@ async function setup() {
     // Get version of tool to be installed
     const version = core.getInput('version');
     // Download the specific version of the tool, e.g. as a tarball/zipball
-    const pathToBin = await tc.downloadTool(`https://cndi-binaries.s3.amazonaws.com/cndi/${version}/cndi-linux`, `bin/cndi`);
+    const pathToBin = await tc.downloadTool(`https://cndi-binaries.s3.amazonaws.com/cndi/${version}/cndi-linux`, `/usr/local/bin/cndi`);
     core.debug(`Downloaded tool to ${pathToBin}`);
     // Expose the tool by adding it to the PATH
     core.addPath(pathToBin)

@@ -1,4 +1,3 @@
-const path = require('path');
 const core = require('@actions/core');
 const tc = require('@actions/tool-cache');
 
@@ -7,7 +6,7 @@ async function setup() {
     // Get version of tool to be installed
     const version = core.getInput('version');
     // Download the specific version of the tool, e.g. as a tarball/zipball
-    const pathToBin = await tc.downloadTool(`https://cndi-binaries.s3.amazonaws.com/cndi/${version}/cndi-linux`, `bin/cndi`);
+    const pathToBin = await tc.downloadTool(`https://cndi-binaries.s3.amazonaws.com/cndi/${version}/cndi-linux`, `/usr/local/bin/cndi`);
     core.debug(`Downloaded tool to ${pathToBin}`);
     // Expose the tool by adding it to the PATH
     core.addPath(pathToBin)
