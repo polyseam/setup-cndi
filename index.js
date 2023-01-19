@@ -12,7 +12,7 @@ async function setup() {
     }
 
     // Download the specific version of the tool, e.g. as a tarball/zipball
-    const pathToBin = await tc.downloadTool(downloadUrl);
+    const pathToBin = await tc.downloadTool(downloadUrl,'/usr/local/bin/cndi');
     core.debug(`Downloaded tool to ${pathToBin}`);
     core.addPath(pathToBin)
     core.debug(`Added ${pathToBin} to PATH`);
