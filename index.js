@@ -9,7 +9,7 @@ async function setup() {
       version = 'latest'
     }
     // Download the specific version of the tool, e.g. as a tarball/zipball
-    const pathToBin = await tc.downloadTool(`https://cndi-binaries.s3.amazonaws.com/cndi/${version}/cndi-linux`, `/usr/local/bin/cndi`);
+    const pathToBin = await tc.downloadTool(`https://cndi-binaries.s3.amazonaws.com/cndi/${version}/cndi-linux`, `bin/cndi`);
     core.debug(`Downloaded tool to ${pathToBin}`);
     
     // Expose the tool by adding it to the PATH
