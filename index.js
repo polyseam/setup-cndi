@@ -1,5 +1,6 @@
 const core = require('@actions/core');
 const tc = require('@actions/tool-cache');
+const exec = require('@actions/exec');
 
 async function setup() {
   try {
@@ -16,6 +17,8 @@ async function setup() {
     core.debug(`Downloaded tool to ${pathToBin}`);
     core.addPath(pathToBin)
     core.debug(`Added ${pathToBin} to PATH`);
+    exec.exec('chmod +x /usr/local/bin/cndi');
+    core.debug('Set cndi to be executable');
   } catch (e) {
     core.setFailed(e);
   }
