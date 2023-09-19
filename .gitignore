@@ -1,3 +1,7 @@
+# Dependency directory
+node_modules
+
+# Rest pulled from https://github.com/github/gitignore/blob/master/Node.gitignore
 # Logs
 logs
 *.log
@@ -38,11 +42,10 @@ bower_components
 build/Release
 
 # Dependency directories
-node_modules/
 jspm_packages/
 
-# Snowpack dependency directory (https://snowpack.dev/)
-web_modules/
+# TypeScript v1 declaration files
+typings/
 
 # TypeScript cache
 *.tsbuildinfo
@@ -52,12 +55,6 @@ web_modules/
 
 # Optional eslint cache
 .eslintcache
-
-# Microbundle cache
-.rpt2_cache/
-.rts2_cache_cjs/
-.rts2_cache_es/
-.rts2_cache_umd/
 
 # Optional REPL history
 .node_repl_history
@@ -74,14 +71,33 @@ web_modules/
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
-.parcel-cache
 
-# Stores VSCode versions used for testing VSCode extensions
-.vscode-test
+# next.js build output
+.next
 
-# yarn v2
-.yarn/cache
-.yarn/unplugged
-.yarn/build-state.yml
-.yarn/install-state.gz
-.pnp.*
+# nuxt.js build output
+.nuxt
+
+# vuepress build output
+.vuepress/dist
+
+# Serverless directories
+.serverless/
+
+# FuseBox cache
+.fusebox/
+
+# DynamoDB Local files
+.dynamodb/
+
+# OS metadata
+.DS_Store
+Thumbs.db
+
+# Ignore built ts files
+__tests__/runner/*
+
+# IDE files
+.idea
+.vscode
+*.code-workspace
