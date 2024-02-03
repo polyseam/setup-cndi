@@ -2726,59 +2726,53 @@ exports["default"] = _default;
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
 const core = __nccwpck_require__(186)
-const { wait } = __nccwpck_require__(312)
+const tc = __nccwpck_require__(617)
+const exec = __nccwpck_require__(290)
 
-/**
- * The main function for the action.
- * @returns {Promise<void>} Resolves when the action is complete.
- */
-async function run() {
+async function setup() {
   try {
-    const ms = core.getInput('milliseconds', { required: true })
+    // Get version of tool to be installed
+    const version = core.getInput('version') || 'latest'
 
-    // Debug logs are only output if the `ACTIONS_STEP_DEBUG` secret is true
-    core.debug(`Waiting ${ms} milliseconds ...`)
+    let downloadUrl = `https://github.com/polyseam/cndi/releases/${version}/download/cndi-linux.tar.gz`
 
-    // Log the current timestamp, wait, then log the new timestamp
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
+    if (version === 'main') {
+      downloadUrl = `https://cndi-binaries.s3.amazonaws.com/cndi/main/cndi-linux.tar.gz`
+    }
 
-    // Set outputs for other workflow steps to use
-    core.setOutput('time', new Date().toTimeString())
-  } catch (error) {
-    // Fail the workflow run if an error occurs
-    core.setFailed(error.message)
+    const p = `${process.env.HOME}/.cndi/bin`
+
+    // Download the specific version of the tool, e.g. as a tarball/zipball
+    const pathToBin = await tc.downloadTool(downloadUrl, p)
+    core.debug(`Downloaded tool to ${pathToBin}`)
+    core.addPath(pathToBin)
+    core.debug(`Added ${pathToBin} to PATH`)
+    exec.exec(`chmod +x ${p}`)
+    core.debug('Set cndi to be executable')
+  } catch (e) {
+    core.setFailed(e)
   }
 }
 
-module.exports = {
-  run
-}
+module.exports = setup
+
+if (false) {}
 
 
 /***/ }),
 
-/***/ 312:
+/***/ 290:
 /***/ ((module) => {
 
-/**
- * Wait for a number of milliseconds.
- *
- * @param {number} milliseconds The number of milliseconds to wait.
- * @returns {Promise<string>} Resolves with 'done!' after the wait is over.
- */
-async function wait(milliseconds) {
-  return new Promise(resolve => {
-    if (isNaN(milliseconds)) {
-      throw new Error('milliseconds not a number')
-    }
+module.exports = eval("require")("@actions/exec");
 
-    setTimeout(() => resolve('done!'), milliseconds)
-  })
-}
 
-module.exports = { wait }
+/***/ }),
+
+/***/ 617:
+/***/ ((module) => {
+
+module.exports = eval("require")("@actions/tool-cache");
 
 
 /***/ }),
@@ -2915,9 +2909,9 @@ var __webpack_exports__ = {};
 /**
  * The entrypoint for the action.
  */
-const { run } = __nccwpck_require__(713)
+const { setup } = __nccwpck_require__(713)
 
-run()
+setup()
 
 })();
 
