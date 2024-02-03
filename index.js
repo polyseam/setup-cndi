@@ -13,7 +13,7 @@ async function setup() {
     }
 
     // Download the specific version of the tool, e.g. as a tarball/zipball
-    const pathToTar = await tc.downloadTool(downloadUrl, `${process.env.HOME}/.cndi/bin`);
+    const pathToTar = await tc.downloadTool(downloadUrl, `/home/runner/.cndi/bin`);
     const pathToBin = await tc.extractTar(pathToTar);
     core.debug(`Downloaded tool to ${pathToBin}`);
     core.addPath(pathToBin)
