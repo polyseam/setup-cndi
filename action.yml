@@ -1,10 +1,14 @@
-name: setup-cndi
-description: Setup cndi CLI on GitHub Actions runners
+name: 'setup-cndi'
+description: 'Installs the cndi executable for use in subsequent steps'
+author: 'polyseam'
+
+# Define your inputs here.
 inputs:
   version:
     description: Version of CNDI CLI to install
     required: false
     default: latest
+
 runs:
-  using: node16
+  using: node20
   main: dist/index.js
