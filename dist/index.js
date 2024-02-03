@@ -25,7 +25,7 @@ async function setup() {
     core.debug(`Downloaded tool to ${pathToBin}`);
     core.addPath(pathToBin)
     core.debug(`Added ${pathToBin} to PATH`);
-    exec.exec(`chmod +x ${p}`);
+    exec.exec(`chmod +x ${p}/cndi`);
     core.debug('Set cndi to be executable');
   } catch (e) {
     core.setFailed(e);
